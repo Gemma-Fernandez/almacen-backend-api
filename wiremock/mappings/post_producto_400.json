@@ -1,0 +1,23 @@
+{
+  "request": {
+    "method": "POST",
+    "urlPattern": "/api/v1/productos",
+    "bodyPatterns": [
+      {
+        "matchesJsonPath": "$[?(@.codigoSKU !~ /^PROD-[0-9]{5}$/)]"
+      }
+    ]
+  },
+  "response": {
+    "status": 400,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "jsonBody": {
+      "timestamp": "2026-11-11",
+      "status": 400,
+      "error": "Bad Request",
+      "mensaje": "El campo 'codigoSKU' no cumple con el formato requerido ^PROD-[0-9]{5}$."
+    }
+  }
+}
