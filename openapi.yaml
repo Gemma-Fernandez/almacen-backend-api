@@ -584,8 +584,8 @@ components:
           example: 150
         fechaAlta:
           type: string
-          format: date-time
-          example: "2026-11-11T10:00:00Z"
+          format: date
+          example: "2026-11-11"
         ubicacionId:
           type: integer
           example: 1
@@ -628,8 +628,8 @@ components:
           example: true
         fechaUltimaRevision:
           type: string
-          format: date-time
-          example: "2026-11-01T08:30:00Z"
+          format: date
+          example: "2026-11-01"
 
     Ubicacion:
       allOf:
@@ -703,8 +703,8 @@ components:
           example: false
         fechaEntregaPrevista:
           type: string
-          format: date-time
-          example: "2026-11-20T14:00:00Z"
+          format: date
+          example: "2026-11-20"
         proveedorId:
           type: integer
           example: 2
@@ -746,8 +746,8 @@ components:
           example: 1450.00
         fechaContratacion:
           type: string
-          format: date-time
-          example: "2024-03-15T09:00:00Z"
+          format: date
+          example: "2024-03-15"
 
     Empleado:
       allOf:
@@ -765,8 +765,8 @@ components:
       properties:
         timestamp:
           type: string
-          format: date-time
-          example: "2026-11-11T09:59:00Z"
+          format: date
+          example: "2026-11-11"
         status:
           type: integer
           example: 400

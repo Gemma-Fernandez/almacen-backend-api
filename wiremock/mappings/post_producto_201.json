@@ -1,0 +1,22 @@
+{
+  "request": {
+    "method": "POST",
+    "urlPattern": "/api/v1/productos"
+  },
+  "response": {
+    "status": 201,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "jsonBody": {
+      "id": 103,
+      "codigoSKU": "PROD-99999",
+      "nombre": "Mancuerna Maniak 15kg",
+      "precio": 19.99,
+      "stock": 200,
+      "fechaAlta": "2026-11-11",
+      "ubicacionId": 3,
+      "proveedorId": 1
+    }
+  }
+}

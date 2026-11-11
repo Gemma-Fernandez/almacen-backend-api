@@ -1,0 +1,18 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/api/v1/productos/error-simulado"
+  },
+  "response": {
+    "status": 500,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "jsonBody": {
+      "timestamp": "2026-11-11",
+      "status": 500,
+      "error": "Internal Server Error",
+      "mensaje": "Error inesperado en la base de datos de almacén."
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPath": "/api/v1/productos"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "jsonBody": [
+      {
+        "id": 101,
+        "codigoSKU": "PROD-12345",
+        "nombre": "Zapatillas Running Trail",
+        "precio": 89.99,
+        "stock": 150,
+        "fechaAlta": "2026-11-11",
+        "ubicacionId": 1,
+        "proveedorId": 2
+      },
+      {
+        "id": 102,
+        "codigoSKU": "PROD-67890",
+        "nombre": "Mochila Hidratación 10L",
+        "precio": 45.50,
+        "stock": 80,
+        "fechaAlta": "2026-11-10",
+        "ubicacionId": 2,
+        "proveedorId": 1
+      }
+    ]
+  }
+}

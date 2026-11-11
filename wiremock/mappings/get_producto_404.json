@@ -1,0 +1,18 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/api/v1/productos/999"
+  },
+  "response": {
+    "status": 404,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "jsonBody": {
+      "timestamp": "2026-11-11",
+      "status": 404,
+      "error": "Not Found",
+      "mensaje": "No se ha encontrado ningún producto con el ID."
+    }
+  }
+}
