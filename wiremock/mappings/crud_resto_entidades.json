@@ -121,7 +121,7 @@
       "response": {
         "status": 200,
         "headers": { "Content-Type": "application/json" },
-        "jsonBody": { "id": 1, "dni": "12345678Z", "nombreCompleto": "Laura Gomez", "fechaContratacion": "2024-03-15", "salario": 1550.00, "turnoNoche": false }
+        "jsonBody": { "id": 1, "dni": "12345678Z", "nombreCompleto": "Laura Gomez", "fechaContratacion": "2024-03-15", "salario": 1850.00, "turnoNoche": false }
       }
     },
     {

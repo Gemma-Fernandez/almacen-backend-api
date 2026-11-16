@@ -2,7 +2,7 @@
   "info": {
     "_postman_id": "a1b2c3d4-e5f6-7890-abcd-1234567890ab",
     "name": "Almacen API - Coleccion de Pruebas",
-    "description": "Coleccion parametrizada para ejecutar en Postman Runner sobre la API Mock WireMock",
+    "description": "Coleccion para ejecutar en Postman Runner sobre la API Mock WireMock",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
