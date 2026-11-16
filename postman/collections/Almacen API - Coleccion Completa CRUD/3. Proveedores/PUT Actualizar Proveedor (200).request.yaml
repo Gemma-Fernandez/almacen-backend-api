@@ -1,0 +1,20 @@
+$kind: http-request
+url: "{{baseUrl}}/proveedores/1"
+method: PUT
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "cif": "B12345678",
+      "nombreEmpresa": "Maniak Fitness SL",
+      "telefono": "600999888",
+      "activo": true,
+      "valoracion": 5.0
+    }
+scripts:
+  - type: afterResponse
+    code: pm.test('Status 200 OK', () => pm.response.to.have.status(200));
+    language: text/javascript
+order: 3000
