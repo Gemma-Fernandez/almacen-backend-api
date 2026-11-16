@@ -1,0 +1,19 @@
+{
+  "request":
+  {
+    "method": "GET",
+    "urlPath": "/api/v1/ubicaciones"
+  }, "response":
+{ "status": 200,
+  "headers":
+  {
+    "Content-Type": "application/json"
+  },
+  "jsonBody": [
+    { "id": 1,
+      "codigoUbicacion": "PAS-A-EST-01",
+      "pasillo": "A",
+      "capacidadMax": 500,
+      "ocupada": false,
+      "fechaUltimaRevision": "2026-11-01" }
+  ] } }
