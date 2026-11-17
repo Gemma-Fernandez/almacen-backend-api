@@ -1,0 +1,17 @@
+{
+  "request":
+  { "method": "POST",
+    "url": "/api/v1/ubicaciones"
+  },
+  "response":
+  { "status": 201,
+    "headers":
+    { "Content-Type": "application/json" },
+    "jsonBody":
+    { "id": 2,
+      "codigoUbicacion": "PAS-B-EST-04",
+      "pasillo": "B",
+      "capacidadMax": 300,
+      "ocupada": true,
+      "fechaUltimaRevision": "2026-11-11"
+    } } }

@@ -1,0 +1,14 @@
+# Use this workspace to collaborate
+workspace:
+  id: cd1db756-90f3-46c8-83b1-ad42da510a89
+
+localResources:
+  collections: []
+  specs:
+    - ../openapi.yaml
+
+# Each entry here maps a local resource to one or more corresponding objects in Postman Cloud
+
+cloudResources:
+  collections:
+    ../postman/collections/Almacen API - Coleccion de Pruebas: 7e19095c-c77b-41e9-ad5e-dd3e7c6aafcc

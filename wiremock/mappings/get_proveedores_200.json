@@ -1,0 +1,19 @@
+{ "request":
+{
+  "method": "GET",
+  "urlPath": "/api/v1/proveedores"
+},
+  "response":
+{
+  "status": 200,
+  "headers":
+  {
+    "Content-Type": "application/json"
+  },
+  "jsonBody":
+  [ { "id": 1, "cif": "B12345678",
+    "nombreEmpresa": "Maniak Fitness SL",
+    "telefono": "600111222",
+    "activo": true,
+    "valoracion": 4.8 }
+  ] } }

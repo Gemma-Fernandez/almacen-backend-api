@@ -1,0 +1,19 @@
+$kind: http-request
+url: "{{baseUrl}}/productos?codigoSKU=PROD-12345&stockMin=100&precioMax=100.00"
+method: GET
+queryParams:
+  codigoSKU: PROD-12345
+  stockMin: "100"
+  precioMax: "100.00"
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status code es 200 OK', function () {
+          pm.response.to.have.status(200);
+      });
+      pm.test('La respuesta es un array de productos', function () {
+          var jsonData = pm.response.json();
+          pm.expect(jsonData).to.be.an('array');
+      });
+    language: text/javascript
+order: 1000

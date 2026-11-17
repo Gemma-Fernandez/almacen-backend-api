@@ -1,0 +1,7 @@
+{
+  "request":
+  { "method": "DELETE",
+    "url": "/api/v1/empleados/1" },
+  "response":
+  { "status": 204 }
+}
