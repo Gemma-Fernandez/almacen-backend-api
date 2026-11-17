@@ -1,0 +1,15 @@
+{ "request":
+{ "method": "PUT",
+  "url": "/api/v1/pedidos/1"
+}, "response":
+{ "status": 200,
+  "headers":
+  { "Content-Type": "application/json" },
+  "jsonBody":
+  { "id": 1,
+    "numeroAlbaran": "ALB-2026-001",
+    "fechaEntregaPrevista": "2026-11-20",
+    "costeTotal": 1250.50,
+    "recibido": true,
+    "proveedorId": 1
+  } } }
