@@ -1,0 +1,20 @@
+{
+  "request":
+  { "method": "POST",
+    "url": "/api/v1/ubicaciones",
+    "bodyPatterns":
+    [
+      { "matchesJsonPath": "$[?(@.capacidadMax < 0)]" }
+    ]
+  },
+  "response":
+  { "status": 400,
+    "headers":
+    { "Content-Type": "application/json" },
+    "jsonBody":
+    { "timestamp": "2026-11-17",
+      "status": 400,
+      "error": "Bad Request",
+      "mensaje": "La capacidad máxima no puede ser negativa."
+    }
+  } }

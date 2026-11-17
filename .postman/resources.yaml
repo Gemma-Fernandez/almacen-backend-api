@@ -10,5 +10,4 @@ localResources:
 # Each entry here maps a local resource to one or more corresponding objects in Postman Cloud
 
 cloudResources:
-  collections:
-    ../postman/collections/Almacen API - Coleccion de Pruebas: 7e19095c-c77b-41e9-ad5e-dd3e7c6aafcc
+  collections: {}
