@@ -1,0 +1,16 @@
+{
+  "request":
+  { "method": "POST",
+    "url": "/api/v1/proveedores"
+  }, "response": {
+  "status": 201,
+  "headers":
+  { "Content-Type": "application/json" },
+  "jsonBody":
+  { "id": 2,
+    "cif": "A87654321",
+    "nombreEmpresa": "Deportes Iberica SA",
+    "telefono": "600333444",
+    "activo": true,
+    "valoracion": 4.5
+  } } }
