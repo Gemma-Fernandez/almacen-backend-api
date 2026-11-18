@@ -1,153 +1,213 @@
 {
-  "info": {
-    "_postman_id": "a1b2c3d4-e5f6-7890-abcd-1234567890ab",
-    "name": "Almacen API - Coleccion Completa CRUD",
-    "description": "Coleccion con CRUD completo, filtros y control de errores para las 5 entidades",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-  },
-  "variable": [
-    { "key": "baseUrl", "value": "http://localhost:8080/api/v1", "type": "string" }
-  ],
-  "item": [
-    {
-      "name": "1. Productos",
-      "item": [
-        {
-          "name": "GET Listar Productos + Filtros (200)",
-          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 200 OK', () => pm.response.to.have.status(200));"], "type": "text/javascript" } }],
-          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/productos?codigoSKU=PROD-12345&stockMin=100&precioMax=100.00", "host": ["{{baseUrl}}"], "path": ["productos"], "query": [{ "key": "codigoSKU", "value": "PROD-12345" }, { "key": "stockMin", "value": "100" }, { "key": "precioMax", "value": "100.00" }] } }
-        },
-        {
-          "name": "POST Crear Producto (201)",
-          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 201 Created', () => pm.response.to.have.status(201));"], "type": "text/javascript" } }],
-          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"codigoSKU\": \"PROD-99999\",\n  \"nombre\": \"Mancuerna Maniak 15kg\",\n  \"precio\": 19.99,\n  \"stock\": 200,\n  \"fechaAlta\": \"2026-11-11\",\n  \"ubicacionId\": 3,\n  \"proveedorId\": 1\n}" }, "url": "{{baseUrl}}/productos" }
-        },
-        {
-          "name": "PUT Actualizar Producto (200)",
-          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 200 OK', () => pm.response.to.have.status(200));"], "type": "text/javascript" } }],
-          "request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"codigoSKU\": \"PROD-12345\",\n  \"nombre\": \"Mancuerna Maniak 20kg (Actualizada)\",\n  \"precio\": 24.99,\n  \"stock\": 180,\n  \"fechaAlta\": \"2026-11-11\",\n  \"ubicacionId\": 3,\n  \"proveedorId\": 1\n}" }, "url": "{{baseUrl}}/productos/1" }
-        },
-        {
-          "name": "DELETE Eliminar Producto (204)",
-          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 204 No Content', () => pm.response.to.have.status(204));"], "type": "text/javascript" } }],
-          "request": { "method": "DELETE", "url": "{{baseUrl}}/productos/1" }
-        },
-        {
-          "name": "GET Producto No Encontrado (404)",
-          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 404 Not Found', () => pm.response.to.have.status(404));"], "type": "text/javascript" } }],
-          "request": { "method": "GET", "url": "{{baseUrl}}/productos/999" }
-        },
-        {
-          "name": "GET Simular Error Servidor (500)",
-          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 500 Internal Error', () => pm.response.to.have.status(500));"], "type": "text/javascript" } }],
-          "request": { "method": "GET", "url": "{{baseUrl}}/productos/error-simulado" }
-        }
-      ]
-    },
-    {
-      "name": "2. Ubicaciones",
-      "item": [
-        {
-          "name": "GET Listar Ubicaciones + Filtros (200)",
-          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 200 OK', () => pm.response.to.have.status(200));"], "type": "text/javascript" } }],
-          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/ubicaciones?codigoUbicacion=PAS-A-EST-01&pasillo=A&ocupada=false", "host": ["{{baseUrl}}"], "path": ["ubicaciones"], "query": [{ "key": "codigoUbicacion", "value": "PAS-A-EST-01" }, { "key": "pasillo", "value": "A" }, { "key": "ocupada", "value": "false" }] } }
-        },
-        {
-          "name": "POST Crear Ubicacion (201)",
-          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 201 Created', () => pm.response.to.have.status(201));"], "type": "text/javascript" } }],
-          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"codigoUbicacion\": \"PAS-B-EST-04\",\n  \"pasillo\": \"B\",\n  \"capacidadMax\": 300,\n  \"ocupada\": true,\n  \"fechaUltimaRevision\": \"2026-11-11\"\n}" }, "url": "{{baseUrl}}/ubicaciones" }
-        },
-        {
-          "name": "PUT Actualizar Ubicacion (200)",
-          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 200 OK', () => pm.response.to.have.status(200));"], "type": "text/javascript" } }],
-          "request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"codigoUbicacion\": \"PAS-A-EST-01\",\n  \"pasillo\": \"A\",\n  \"capacidadMax\": 600,\n  \"ocupada\": true,\n  \"fechaUltimaRevision\": \"2026-11-11\"\n}" }, "url": "{{baseUrl}}/ubicaciones/1" }
-        },
-        {
-          "name": "DELETE Eliminar Ubicacion (204)",
-          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 204 No Content', () => pm.response.to.have.status(204));"], "type": "text/javascript" } }],
-          "request": { "method": "DELETE", "url": "{{baseUrl}}/ubicaciones/1" }
-        },
-        {
-          "name": "GET Ubicacion No Encontrada (404)",
-          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 404 Not Found', () => pm.response.to.have.status(404));"], "type": "text/javascript" } }],
-          "request": { "method": "GET", "url": "{{baseUrl}}/ubicaciones/999" }
-        }
-      ]
-    },
-    {
-      "name": "3. Proveedores",
-      "item": [
-        {
-          "name": "GET Listar Proveedores + Filtros (200)",
-          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 200 OK', () => pm.response.to.have.status(200));"], "type": "text/javascript" } }],
-          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/proveedores?cif=B12345678&nombreEmpresa=Maniak&activo=true", "host": ["{{baseUrl}}"], "path": ["proveedores"], "query": [{ "key": "cif", "value": "B12345678" }, { "key": "nombreEmpresa", "value": "Maniak" }, { "key": "activo", "value": "true" }] } }
-        },
-        {
-          "name": "POST Crear Proveedor (201)",
-          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 201 Created', () => pm.response.to.have.status(201));"], "type": "text/javascript" } }],
-          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"cif\": \"A87654321\",\n  \"nombreEmpresa\": \"Deportes Iberica SA\",\n  \"telefono\": \"600333444\",\n  \"activo\": true,\n  \"valoracion\": 4.5\n}" }, "url": "{{baseUrl}}/proveedores" }
-        },
-        {
-          "name": "PUT Actualizar Proveedor (200)",
-          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 200 OK', () => pm.response.to.have.status(200));"], "type": "text/javascript" } }],
-          "request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"cif\": \"B12345678\",\n  \"nombreEmpresa\": \"Maniak Fitness SL\",\n  \"telefono\": \"600999888\",\n  \"activo\": true,\n  \"valoracion\": 5.0\n}" }, "url": "{{baseUrl}}/proveedores/1" }
-        },
-        {
-          "name": "DELETE Eliminar Proveedor (204)",
-          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 204 No Content', () => pm.response.to.have.status(204));"], "type": "text/javascript" } }],
-          "request": { "method": "DELETE", "url": "{{baseUrl}}/proveedores/1" }
-        }
-      ]
-    },
-    {
-      "name": "4. Pedidos Proveedor",
-      "item": [
-        {
-          "name": "GET Listar Pedidos + Filtros (200)",
-          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 200 OK', () => pm.response.to.have.status(200));"], "type": "text/javascript" } }],
-          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/pedidos?numeroAlbaran=ALB-2026-001&recibido=false&proveedorId=1", "host": ["{{baseUrl}}"], "path": ["pedidos"], "query": [{ "key": "numeroAlbaran", "value": "ALB-2026-001" }, { "key": "recibido", "value": "false" }, { "key": "proveedorId", "value": "1" }] } }
-        },
-        {
-          "name": "POST Crear Pedido (201)",
-          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 201 Created', () => pm.response.to.have.status(201));"], "type": "text/javascript" } }],
-          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"numeroAlbaran\": \"ALB-2026-002\",\n  \"fechaEntregaPrevista\": \"2026-11-25\",\n  \"costeTotal\": 840.00,\n  \"recibido\": false,\n  \"proveedorId\": 1\n}" }, "url": "{{baseUrl}}/pedidos" }
-        },
-        {
-          "name": "PUT Actualizar Pedido (200)",
-          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 200 OK', () => pm.response.to.have.status(200));"], "type": "text/javascript" } }],
-          "request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"numeroAlbaran\": \"ALB-2026-001\",\n  \"fechaEntregaPrevista\": \"2026-11-20\",\n  \"costeTotal\": 1250.50,\n  \"recibido\": true,\n  \"proveedorId\": 1\n}" }, "url": "{{baseUrl}}/pedidos/1" }
-        },
-        {
-          "name": "DELETE Eliminar Pedido (204)",
-          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 204 No Content', () => pm.response.to.have.status(204));"], "type": "text/javascript" } }],
-          "request": { "method": "DELETE", "url": "{{baseUrl}}/pedidos/1" }
-        }
-      ]
-    },
-    {
-      "name": "5. Empleados",
-      "item": [
-        {
-          "name": "GET Listar Empleados + Filtros (200)",
-          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 200 OK', () => pm.response.to.have.status(200));"], "type": "text/javascript" } }],
-          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/empleados?dni=12345678Z&turnoNoche=false&salarioMin=1500", "host": ["{{baseUrl}}"], "path": ["empleados"], "query": [{ "key": "dni", "value": "12345678Z" }, { "key": "turnoNoche", "value": "false" }, { "key": "salarioMin", "value": "1500" }] } }
-        },
-        {
-          "name": "POST Crear Empleado (201)",
-          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 201 Created', () => pm.response.to.have.status(201));"], "type": "text/javascript" } }],
-          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"dni\": \"87654321X\",\n  \"nombreCompleto\": \"Carlos Ruiz\",\n  \"fechaContratacion\": \"2026-11-11\",\n  \"salario\": 1750.00,\n  \"turnoNoche\": true\n}" }, "url": "{{baseUrl}}/empleados" }
-        },
-        {
-          "name": "PUT Actualizar Empleado (200)",
-          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 200 OK', () => pm.response.to.have.status(200));"], "type": "text/javascript" } }],
-          "request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"dni\": \"12345678Z\",\n  \"nombreCompleto\": \"Laura Gomez\",\n  \"fechaContratacion\": \"2024-03-15\",\n  \"salario\": 1950.00,\n  \"turnoNoche\": false\n}" }, "url": "{{baseUrl}}/empleados/1" }
-        },
-        {
-          "name": "DELETE Eliminar Empleado (204)",
-          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 204 No Content', () => pm.response.to.have.status(204));"], "type": "text/javascript" } }],
-          "request": { "method": "DELETE", "url": "{{baseUrl}}/empleados/1" }
-        }
-      ]
-    }
-  ]
+	"info": {
+		"_postman_id": "a1b2c3d4-e5f6-7890-abcd-1234567890ab",
+		"name": "Almacen API - Coleccion Completa CRUD",
+		"description": "Coleccion con CRUD completo, filtros y control de errores 400, 404 y 500 para las 5 entidades",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{ "key": "baseUrl", "value": "http://localhost:8080/api/v1", "type": "string" }
+	],
+	"item": [
+		{
+			"name": "1. Productos",
+			"item": [
+				{
+					"name": "GET Listar Productos + Filtros (200)",
+					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 200 OK', () => pm.response.to.have.status(200));"], "type": "text/javascript" } }],
+					"request": { "method": "GET", "url": { "raw": "{{baseUrl}}/productos?codigoSKU=PROD-12345&stockMin=100&precioMax=100.00", "host": ["{{baseUrl}}"], "path": ["productos"], "query": [{ "key": "codigoSKU", "value": "PROD-12345" }, { "key": "stockMin", "value": "100" }, { "key": "precioMax", "value": "100.00" }] } }
+				},
+				{
+					"name": "POST Crear Producto (201)",
+					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 201 Created', () => pm.response.to.have.status(201));"], "type": "text/javascript" } }],
+					"request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"codigoSKU\": \"PROD-99999\",\n  \"nombre\": \"Mancuerna Maniak 15kg\",\n  \"precio\": 19.99,\n  \"stock\": 200,\n  \"fechaAlta\": \"2026-11-11\",\n  \"ubicacionId\": 3,\n  \"proveedorId\": 1\n}" }, "url": "{{baseUrl}}/productos" }
+				},
+				{
+					"name": "PUT Actualizar Producto (200)",
+					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 200 OK', () => pm.response.to.have.status(200));"], "type": "text/javascript" } }],
+					"request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"codigoSKU\": \"PROD-12345\",\n  \"nombre\": \"Mancuerna Maniak 20kg (Actualizada)\",\n  \"precio\": 24.99,\n  \"stock\": 180,\n  \"fechaAlta\": \"2026-11-11\",\n  \"ubicacionId\": 3,\n  \"proveedorId\": 1\n}" }, "url": "{{baseUrl}}/productos/1" }
+				},
+				{
+					"name": "DELETE Producto (204)",
+					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 204 No Content', () => pm.response.to.have.status(204));"], "type": "text/javascript" } }],
+					"request": { "method": "DELETE", "url": "{{baseUrl}}/productos/1" }
+				},
+				{
+					"name": "POST Producto Datos Invalidos (400)",
+					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 400 Bad Request', () => pm.response.to.have.status(400));"], "type": "text/javascript" } }],
+					"request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"codigoSKU\": \"PROD-ERR\",\n  \"nombre\": \"Producto Precio Negativo\",\n  \"precio\": -10.00,\n  \"stock\": 5,\n  \"fechaAlta\": \"2026-11-11\",\n  \"ubicacionId\": 1,\n  \"proveedorId\": 1\n}" }, "url": "{{baseUrl}}/productos" }
+				},
+				{
+					"name": "GET Producto No Encontrado (404)",
+					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 404 Not Found', () => pm.response.to.have.status(404));"], "type": "text/javascript" } }],
+					"request": { "method": "GET", "url": "{{baseUrl}}/productos/999" }
+				},
+				{
+					"name": "GET Simular Error Servidor Productos (500)",
+					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 500 Internal Error', () => pm.response.to.have.status(500));"], "type": "text/javascript" } }],
+					"request": { "method": "GET", "url": "{{baseUrl}}/productos/error-simulado" }
+				}
+			]
+		},
+		{
+			"name": "2. Ubicaciones",
+			"item": [
+				{
+					"name": "GET Listar Ubicaciones + Filtros (200)",
+					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 200 OK', () => pm.response.to.have.status(200));"], "type": "text/javascript" } }],
+					"request": { "method": "GET", "url": { "raw": "{{baseUrl}}/ubicaciones?codigoUbicacion=PAS-A-EST-01&pasillo=A&ocupada=false", "host": ["{{baseUrl}}"], "path": ["ubicaciones"], "query": [{ "key": "codigoUbicacion", "value": "PAS-A-EST-01" }, { "key": "pasillo", "value": "A" }, { "key": "ocupada", "value": "false" }] } }
+				},
+				{
+					"name": "POST Crear Ubicacion (201)",
+					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 201 Created', () => pm.response.to.have.status(201));"], "type": "text/javascript" } }],
+					"request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"codigoUbicacion\": \"PAS-B-EST-04\",\n  \"pasillo\": \"B\",\n  \"capacidadMax\": 300,\n  \"ocupada\": true,\n  \"fechaUltimaRevision\": \"2026-11-11\"\n}" }, "url": "{{baseUrl}}/ubicaciones" }
+				},
+				{
+					"name": "PUT Actualizar Ubicacion (200)",
+					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 200 OK', () => pm.response.to.have.status(200));"], "type": "text/javascript" } }],
+					"request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"codigoUbicacion\": \"PAS-A-EST-01\",\n  \"pasillo\": \"A\",\n  \"capacidadMax\": 600,\n  \"ocupada\": true,\n  \"fechaUltimaRevision\": \"2026-11-11\"\n}" }, "url": "{{baseUrl}}/ubicaciones/1" }
+				},
+				{
+					"name": "DELETE Eliminar Ubicacion (204)",
+					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 204 No Content', () => pm.response.to.have.status(204));"], "type": "text/javascript" } }],
+					"request": { "method": "DELETE", "url": "{{baseUrl}}/ubicaciones/1" }
+				},
+				{
+					"name": "POST Ubicacion Datos Invalidos (400)",
+					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 400 Bad Request', () => pm.response.to.have.status(400));"], "type": "text/javascript" } }],
+					"request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"codigoUbicacion\": \"PAS-ERR\",\n  \"pasillo\": \"Z\",\n  \"capacidadMax\": -50,\n  \"ocupada\": false,\n  \"fechaUltimaRevision\": \"2026-11-17\"\n}" }, "url": "{{baseUrl}}/ubicaciones" }
+				},
+				{
+					"name": "GET Ubicacion No Encontrada (404)",
+					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 404 Not Found', () => pm.response.to.have.status(404));"], "type": "text/javascript" } }],
+					"request": { "method": "GET", "url": "{{baseUrl}}/ubicaciones/999" }
+				},
+				{
+					"name": "GET Simular Error Servidor Ubicaciones (500)",
+					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 500 Internal Error', () => pm.response.to.have.status(500));"], "type": "text/javascript" } }],
+					"request": { "method": "GET", "url": "{{baseUrl}}/ubicaciones/error-simulado" }
+				}
+			]
+		},
+		{
+			"name": "3. Proveedores",
+			"item": [
+				{
+					"name": "GET Listar Proveedores + Filtros (200)",
+					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 200 OK', () => pm.response.to.have.status(200));"], "type": "text/javascript" } }],
+					"request": { "method": "GET", "url": { "raw": "{{baseUrl}}/proveedores?cif=B12345678&nombreEmpresa=Maniak&activo=true", "host": ["{{baseUrl}}"], "path": ["proveedores"], "query": [{ "key": "cif", "value": "B12345678" }, { "key": "nombreEmpresa", "value": "Maniak" }, { "key": "activo", "value": "true" }] } }
+				},
+				{
+					"name": "POST Crear Proveedor (201)",
+					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 201 Created', () => pm.response.to.have.status(201));"], "type": "text/javascript" } }],
+					"request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"cif\": \"A87654321\",\n  \"nombreEmpresa\": \"Deportes Iberica SA\",\n  \"telefono\": \"600333444\",\n  \"activo\": true,\n  \"valoracion\": 4.5\n}" }, "url": "{{baseUrl}}/proveedores" }
+				},
+				{
+					"name": "PUT Actualizar Proveedor (200)",
+					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 200 OK', () => pm.response.to.have.status(200));"], "type": "text/javascript" } }],
+					"request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"cif\": \"B12345678\",\n  \"nombreEmpresa\": \"Maniak Fitness SL\",\n  \"telefono\": \"600999888\",\n  \"activo\": true,\n  \"valoracion\": 5.0\n}" }, "url": "{{baseUrl}}/proveedores/1" }
+				},
+				{
+					"name": "DELETE Proveedor (204)",
+					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 204 No Content', () => pm.response.to.have.status(204));"], "type": "text/javascript" } }],
+					"request": { "method": "DELETE", "url": "{{baseUrl}}/proveedores/1" }
+				},
+				{
+					"name": "POST Proveedor Datos Invalidos (400)",
+					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 400 Bad Request', () => pm.response.to.have.status(400));"], "type": "text/javascript" } }],
+					"request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"cif\": \"\",\n  \"nombreEmpresa\": \"Empresa Sin CIF\",\n  \"telefono\": \"600000000\",\n  \"activo\": true,\n  \"valoracion\": 3.0\n}" }, "url": "{{baseUrl}}/proveedores" }
+				},
+				{
+					"name": "GET Proveedor No Encontrado (404)",
+					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 404 Not Found', () => pm.response.to.have.status(404));"], "type": "text/javascript" } }],
+					"request": { "method": "GET", "url": "{{baseUrl}}/proveedores/999" }
+				},
+				{
+					"name": "GET Error Servidor Proveedores (500)",
+					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 500 Internal Error', () => pm.response.to.have.status(500));"], "type": "text/javascript" } }],
+					"request": { "method": "GET", "url": "{{baseUrl}}/proveedores/error-simulado" }
+				}
+			]
+		},
+		{
+			"name": "4. Pedidos Proveedor",
+			"item": [
+				{
+					"name": "GET Listar Pedidos + Filtros (200)",
+					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 200 OK', () => pm.response.to.have.status(200));"], "type": "text/javascript" } }],
+					"request": { "method": "GET", "url": { "raw": "{{baseUrl}}/pedidos?numeroAlbaran=ALB-2026-001&recibido=false&proveedorId=1", "host": ["{{baseUrl}}"], "path": ["pedidos"], "query": [{ "key": "numeroAlbaran", "value": "ALB-2026-001" }, { "key": "recibido", "value": "false" }, { "key": "proveedorId", "value": "1" }] } }
+				},
+				{
+					"name": "POST Crear Pedido (201)",
+					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 201 Created', () => pm.response.to.have.status(201));"], "type": "text/javascript" } }],
+					"request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"numeroAlbaran\": \"ALB-2026-002\",\n  \"fechaEntregaPrevista\": \"2026-11-25\",\n  \"costeTotal\": 840.00,\n  \"recibido\": false,\n  \"proveedorId\": 1\n}" }, "url": "{{baseUrl}}/pedidos" }
+				},
+				{
+					"name": "PUT Actualizar Pedido (200)",
+					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 200 OK', () => pm.response.to.have.status(200));"], "type": "text/javascript" } }],
+					"request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"numeroAlbaran\": \"ALB-2026-001\",\n  \"fechaEntregaPrevista\": \"2026-11-20\",\n  \"costeTotal\": 1250.50,\n  \"recibido\": true,\n  \"proveedorId\": 1\n}" }, "url": "{{baseUrl}}/pedidos/1" }
+				},
+				{
+					"name": "DELETE Eliminar Pedido (204)",
+					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 204 No Content', () => pm.response.to.have.status(204));"], "type": "text/javascript" } }],
+					"request": { "method": "DELETE", "url": "{{baseUrl}}/pedidos/1" }
+				},
+				{
+					"name": "POST Pedido Datos Invalidos (400)",
+					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 400 Bad Request', () => pm.response.to.have.status(400));"], "type": "text/javascript" } }],
+					"request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"numeroAlbaran\": \"ALB-ERR\",\n  \"fechaEntregaPrevista\": \"2026-11-25\",\n  \"costeTotal\": -100.00,\n  \"recibido\": false,\n  \"proveedorId\": 1\n}" }, "url": "{{baseUrl}}/pedidos" }
+				},
+				{
+					"name": "GET Pedido No Encontrado (404)",
+					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 404 Not Found', () => pm.response.to.have.status(404));"], "type": "text/javascript" } }],
+					"request": { "method": "GET", "url": "{{baseUrl}}/pedidos/999" }
+				},
+				{
+					"name": "GET Simular Error Servidor Pedidos (500)",
+					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 500 Internal Error', () => pm.response.to.have.status(500));"], "type": "text/javascript" } }],
+					"request": { "method": "GET", "url": "{{baseUrl}}/pedidos/error-simulado" }
+				}
+			]
+		},
+		{
+			"name": "5. Empleados",
+			"item": [
+				{
+					"name": "GET Listar Empleados + Filtros (200)",
+					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 200 OK', () => pm.response.to.have.status(200));"], "type": "text/javascript" } }],
+					"request": { "method": "GET", "url": { "raw": "{{baseUrl}}/empleados?dni=12345678Z&turnoNoche=false&salarioMin=1500", "host": ["{{baseUrl}}"], "path": ["empleados"], "query": [{ "key": "dni", "value": "12345678Z" }, { "key": "turnoNoche", "value": "false" }, { "key": "salarioMin", "value": "1500" }] } }
+				},
+				{
+					"name": "POST Crear Empleado (201)",
+					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 201 Created', () => pm.response.to.have.status(201));"], "type": "text/javascript" } }],
+					"request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"dni\": \"87654321X\",\n  \"nombreCompleto\": \"Carlos Ruiz\",\n  \"fechaContratacion\": \"2026-11-11\",\n  \"salario\": 1750.00,\n  \"turnoNoche\": true\n}" }, "url": "{{baseUrl}}/empleados" }
+				},
+				{
+					"name": "PUT Actualizar Empleado (200)",
+					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 200 OK', () => pm.response.to.have.status(200));"], "type": "text/javascript" } }],
+					"request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"dni\": \"12345678Z\",\n  \"nombreCompleto\": \"Laura Gomez\",\n  \"fechaContratacion\": \"2024-03-15\",\n  \"salario\": 1950.00,\n  \"turnoNoche\": false\n}" }, "url": "{{baseUrl}}/empleados/1" }
+				},
+				{
+					"name": "DELETE Eliminar Empleado (204)",
+					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 204 No Content', () => pm.response.to.have.status(204));"], "type": "text/javascript" } }],
+					"request": { "method": "DELETE", "url": "{{baseUrl}}/empleados/1" }
+				},
+				{
+					"name": "POST Empleado Datos Invalidos (400)",
+					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 400 Bad Request', () => pm.response.to.have.status(400));"], "type": "text/javascript" } }],
+					"request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"dni\": \"00000000T\",\n  \"nombreCompleto\": \"Empleado Salario Negativo\",\n  \"fechaContratacion\": \"2026-11-17\",\n  \"salario\": -500.00,\n  \"turnoNoche\": false\n}" }, "url": "{{baseUrl}}/empleados" }
+				},
+				{
+					"name": "GET Empleado No Encontrado (404)",
+					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 404 Not Found', () => pm.response.to.have.status(404));"], "type": "text/javascript" } }],
+					"request": { "method": "GET", "url": "{{baseUrl}}/empleados/999" }
+				},
+				{
+					"name": "GET Error Servidor Empleados (500)",
+					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 500 Internal Error', () => pm.response.to.have.status(500));"], "type": "text/javascript" } }],
+					"request": { "method": "GET", "url": "{{baseUrl}}/empleados/error-simulado" }
+				}
+			]
+		}
+	]
 }
