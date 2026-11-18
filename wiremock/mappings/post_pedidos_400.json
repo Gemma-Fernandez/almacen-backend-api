@@ -1,0 +1,18 @@
+{
+  "request":
+  { "method": "POST",
+    "url": "/api/v1/pedidos",
+    "bodyPatterns":
+    [ { "matchesJsonPath": "$[?(@.costeTotal < 0)]" } ]
+  },
+  "response":
+  { "status": 400,
+    "headers":
+    { "Content-Type": "application/json" },
+    "jsonBody":
+    { "timestamp": "2026-11-17",
+      "status": 400,
+      "error": "Bad Request",
+      "mensaje": "El coste total del pedido no puede ser negativo."
+    }
+  } }

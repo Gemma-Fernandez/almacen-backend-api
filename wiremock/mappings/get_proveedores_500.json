@@ -1,0 +1,14 @@
+{
+  "request":
+  { "method": "GET",
+    "url": "/api/v1/proveedores/error-simulado" },
+  "response":
+  { "status": 500, "headers":
+  { "Content-Type": "application/json" },
+    "jsonBody":
+    { "timestamp": "2026-11-17",
+      "status": 500,
+      "error": "Internal Server Error",
+      "mensaje": "Error interno en el servidor de proveedores."
+    }
+  } }

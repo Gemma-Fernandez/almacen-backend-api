@@ -1,0 +1,17 @@
+{
+  "request":
+  { "method": "GET",
+    "url": "/api/v1/pedidos/error-simulado"
+  },
+  "response":
+  { "status": 500,
+    "headers":
+    { "Content-Type": "application/json" },
+    "jsonBody":
+    { "timestamp": "2026-11-17",
+      "status": 500,
+      "error": "Internal Server Error",
+      "mensaje": "Error interno simulado en el servidor de pedidos."
+    }
+  }
+}

@@ -1,0 +1,12 @@
+$kind: http-request
+url: "{{baseUrl}}/proveedores?cif=B12345678&nombreEmpresa=Maniak&activo=true"
+method: GET
+queryParams:
+  cif: B12345678
+  nombreEmpresa: Maniak
+  activo: "true"
+scripts:
+  - type: afterResponse
+    code: pm.test('Status 200 OK', () => pm.response.to.have.status(200));
+    language: text/javascript
+order: 1000

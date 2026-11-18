@@ -1,0 +1,15 @@
+{
+  "request":
+  { "method": "GET",
+    "url": "/api/v1/empleados/999" },
+  "response":
+  { "status": 404,
+    "headers":
+    { "Content-Type": "application/json" },
+    "jsonBody":
+    { "timestamp": "2026-11-17",
+      "status": 404,
+      "error": "Not Found",
+      "mensaje": "Empleado 999 no encontrado."
+    }
+  } }
