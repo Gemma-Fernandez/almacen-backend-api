@@ -1,0 +1,14 @@
+{ "request":
+{ "method": "GET",
+  "url": "/api/v1/pedidos/999" },
+  "response":
+  { "status": 404,
+    "headers":
+    { "Content-Type": "application/json" },
+    "jsonBody":
+    { "timestamp": "2026-11-17",
+      "status": 404,
+      "error": "Not Found",
+      "mensaje": "Pedido 999 no encontrado."
+    }
+  } }
