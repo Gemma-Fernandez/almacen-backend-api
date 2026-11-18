@@ -10,7 +10,7 @@
 	],
 	"item": [
 		{
-			"name": "1. Productos",
+			"name": "1.Productos",
 			"item": [
 				{
 					"name": "GET Listar Productos + Filtros (200)",
