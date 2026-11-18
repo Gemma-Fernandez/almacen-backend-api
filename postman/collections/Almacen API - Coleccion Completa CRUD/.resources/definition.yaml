@@ -1,4 +1,0 @@
-$kind: collection
-description: Coleccion con CRUD completo, filtros y control de errores para las 5 entidades
-variables:
-  baseUrl: http://localhost:8080/api/v1
