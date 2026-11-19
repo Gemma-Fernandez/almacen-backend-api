@@ -40,4 +40,4 @@ La API simulada quedará escuchando en `http://localhost:8080/api/v1`.
 1. Abre **Postman** y selecciona **Import** para cargar el archivo `postman_collection.json` situado en la raíz del proyecto.
 2. Verifica que la variable de colección `baseUrl` apunta a `http://localhost:8080/api/v1`.
 3. Haz clic en los tres puntos (`...`) de la colección **Almacen API - Coleccion Completa CRUD** > **Run**.
-4. Se ejecutarán automáticamente las **35 pruebas** cubriendo operaciones `GET` (con hasta 3 filtros por entidad), `POST`, `PUT`, `DELETE` y respuestas de error `400`, `404` y `500`.
+4. Se ejecutarán automáticamente las **40 pruebas** cubriendo operaciones `GET` (con hasta 3 filtros por entidad), `POST`, `PUT`, `DELETE` , `PATCH` y respuestas de error `400`, `404` y `500`.
