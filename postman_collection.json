@@ -1,8 +1,8 @@
 {
 	"info": {
 		"_postman_id": "a1b2c3d4-e5f6-7890-abcd-1234567890ab",
-		"name": "Almacen API - Coleccion Completa CRUD",
-		"description": "Coleccion con CRUD completo, filtros y control de errores 400, 404 y 500 para las 5 entidades",
+		"name": "Almacen API - Coleccion Completa CRUD + PATCH",
+		"description": "Coleccion con CRUD completo, PATCH parcial, filtros y control de errores 400, 404 y 500 para las 5 entidades",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"variable": [
@@ -10,7 +10,7 @@
 	],
 	"item": [
 		{
-			"name": "1.Productos",
+			"name": "1. Productos",
 			"item": [
 				{
 					"name": "GET Listar Productos + Filtros (200)",
@@ -28,7 +28,12 @@
 					"request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"codigoSKU\": \"PROD-12345\",\n  \"nombre\": \"Mancuerna Maniak 20kg (Actualizada)\",\n  \"precio\": 24.99,\n  \"stock\": 180,\n  \"fechaAlta\": \"2026-11-11\",\n  \"ubicacionId\": 3,\n  \"proveedorId\": 1\n}" }, "url": "{{baseUrl}}/productos/1" }
 				},
 				{
-					"name": "DELETE Producto (204)",
+					"name": "PATCH Modificar Parcialmente Producto (200)",
+					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 200 OK', () => pm.response.to.have.status(200));"], "type": "text/javascript" } }],
+					"request": { "method": "PATCH", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"precio\": 22.50\n}" }, "url": "{{baseUrl}}/productos/1" }
+				},
+				{
+					"name": "DELETE Eliminar Producto (204)",
 					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 204 No Content', () => pm.response.to.have.status(204));"], "type": "text/javascript" } }],
 					"request": { "method": "DELETE", "url": "{{baseUrl}}/productos/1" }
 				},
@@ -68,7 +73,12 @@
 					"request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"codigoUbicacion\": \"PAS-A-EST-01\",\n  \"pasillo\": \"A\",\n  \"capacidadMax\": 600,\n  \"ocupada\": true,\n  \"fechaUltimaRevision\": \"2026-11-11\"\n}" }, "url": "{{baseUrl}}/ubicaciones/1" }
 				},
 				{
-					"name": "DELETE Eliminar Ubicacion (204)",
+					"name": "PATCH Modificar Parcialmente Ubicacion (200)",
+					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 200 OK', () => pm.response.to.have.status(200));"], "type": "text/javascript" } }],
+					"request": { "method": "PATCH", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"ocupada\": true\n}" }, "url": "{{baseUrl}}/ubicaciones/1" }
+				},
+				{
+					"name": "DELETE Ubicacion (204)",
 					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 204 No Content', () => pm.response.to.have.status(204));"], "type": "text/javascript" } }],
 					"request": { "method": "DELETE", "url": "{{baseUrl}}/ubicaciones/1" }
 				},
@@ -108,7 +118,12 @@
 					"request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"cif\": \"B12345678\",\n  \"nombreEmpresa\": \"Maniak Fitness SL\",\n  \"telefono\": \"600999888\",\n  \"activo\": true,\n  \"valoracion\": 5.0\n}" }, "url": "{{baseUrl}}/proveedores/1" }
 				},
 				{
-					"name": "DELETE Proveedor (204)",
+					"name": "PATCH Modificar Parcialmente Proveedor (200)",
+					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 200 OK', () => pm.response.to.have.status(200));"], "type": "text/javascript" } }],
+					"request": { "method": "PATCH", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"activo\": false\n}" }, "url": "{{baseUrl}}/proveedores/1" }
+				},
+				{
+					"name": "DELETE Eliminar Proveedor (204)",
 					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 204 No Content', () => pm.response.to.have.status(204));"], "type": "text/javascript" } }],
 					"request": { "method": "DELETE", "url": "{{baseUrl}}/proveedores/1" }
 				},
@@ -123,7 +138,7 @@
 					"request": { "method": "GET", "url": "{{baseUrl}}/proveedores/999" }
 				},
 				{
-					"name": "GET Error Servidor Proveedores (500)",
+					"name": "GET Simular Error Servidor Proveedores (500)",
 					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 500 Internal Error', () => pm.response.to.have.status(500));"], "type": "text/javascript" } }],
 					"request": { "method": "GET", "url": "{{baseUrl}}/proveedores/error-simulado" }
 				}
@@ -135,37 +150,42 @@
 				{
 					"name": "GET Listar Pedidos + Filtros (200)",
 					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 200 OK', () => pm.response.to.have.status(200));"], "type": "text/javascript" } }],
-					"request": { "method": "GET", "url": { "raw": "{{baseUrl}}/pedidos?numeroAlbaran=ALB-2026-001&recibido=false&proveedorId=1", "host": ["{{baseUrl}}"], "path": ["pedidos"], "query": [{ "key": "numeroAlbaran", "value": "ALB-2026-001" }, { "key": "recibido", "value": "false" }, { "key": "proveedorId", "value": "1" }] } }
+					"request": { "method": "GET", "url": { "raw": "{{baseUrl}}/pedidos-proveedor?numeroAlbaran=ALB-2026-001&recibido=false&proveedorId=1", "host": ["{{baseUrl}}"], "path": ["pedidos-proveedor"], "query": [{ "key": "numeroAlbaran", "value": "ALB-2026-001" }, { "key": "recibido", "value": "false" }, { "key": "proveedorId", "value": "1" }] } }
 				},
 				{
 					"name": "POST Crear Pedido (201)",
 					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 201 Created', () => pm.response.to.have.status(201));"], "type": "text/javascript" } }],
-					"request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"numeroAlbaran\": \"ALB-2026-002\",\n  \"fechaEntregaPrevista\": \"2026-11-25\",\n  \"costeTotal\": 840.00,\n  \"recibido\": false,\n  \"proveedorId\": 1\n}" }, "url": "{{baseUrl}}/pedidos" }
+					"request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"numeroAlbaran\": \"ALB-2026-002\",\n  \"fechaEntregaPrevista\": \"2026-11-25\",\n  \"costeTotal\": 840.00,\n  \"recibido\": false,\n  \"proveedorId\": 1\n}" }, "url": "{{baseUrl}}/pedidos-proveedor" }
 				},
 				{
 					"name": "PUT Actualizar Pedido (200)",
 					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 200 OK', () => pm.response.to.have.status(200));"], "type": "text/javascript" } }],
-					"request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"numeroAlbaran\": \"ALB-2026-001\",\n  \"fechaEntregaPrevista\": \"2026-11-20\",\n  \"costeTotal\": 1250.50,\n  \"recibido\": true,\n  \"proveedorId\": 1\n}" }, "url": "{{baseUrl}}/pedidos/1" }
+					"request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"numeroAlbaran\": \"ALB-2026-001\",\n  \"fechaEntregaPrevista\": \"2026-11-20\",\n  \"costeTotal\": 1250.50,\n  \"recibido\": true,\n  \"proveedorId\": 1\n}" }, "url": "{{baseUrl}}/pedidos-proveedor/1" }
 				},
 				{
-					"name": "DELETE Eliminar Pedido (204)",
+					"name": "PATCH Modificar Parcialmente Pedido (200)",
+					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 200 OK', () => pm.response.to.have.status(200));"], "type": "text/javascript" } }],
+					"request": { "method": "PATCH", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"recibido\": true\n}" }, "url": "{{baseUrl}}/pedidos-proveedor/1" }
+				},
+				{
+					"name": "DELETE Pedido (204)",
 					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 204 No Content', () => pm.response.to.have.status(204));"], "type": "text/javascript" } }],
-					"request": { "method": "DELETE", "url": "{{baseUrl}}/pedidos/1" }
+					"request": { "method": "DELETE", "url": "{{baseUrl}}/pedidos-proveedor/1" }
 				},
 				{
 					"name": "POST Pedido Datos Invalidos (400)",
 					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 400 Bad Request', () => pm.response.to.have.status(400));"], "type": "text/javascript" } }],
-					"request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"numeroAlbaran\": \"ALB-ERR\",\n  \"fechaEntregaPrevista\": \"2026-11-25\",\n  \"costeTotal\": -100.00,\n  \"recibido\": false,\n  \"proveedorId\": 1\n}" }, "url": "{{baseUrl}}/pedidos" }
+					"request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"numeroAlbaran\": \"ALB-ERR\",\n  \"fechaEntregaPrevista\": \"2026-11-25\",\n  \"costeTotal\": -100.00,\n  \"recibido\": false,\n  \"proveedorId\": 1\n}" }, "url": "{{baseUrl}}/pedidos-proveedor" }
 				},
 				{
 					"name": "GET Pedido No Encontrado (404)",
 					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 404 Not Found', () => pm.response.to.have.status(404));"], "type": "text/javascript" } }],
-					"request": { "method": "GET", "url": "{{baseUrl}}/pedidos/999" }
+					"request": { "method": "GET", "url": "{{baseUrl}}/pedidos-proveedor/999" }
 				},
 				{
 					"name": "GET Simular Error Servidor Pedidos (500)",
 					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 500 Internal Error', () => pm.response.to.have.status(500));"], "type": "text/javascript" } }],
-					"request": { "method": "GET", "url": "{{baseUrl}}/pedidos/error-simulado" }
+					"request": { "method": "GET", "url": "{{baseUrl}}/pedidos-proveedor/error-simulado" }
 				}
 			]
 		},
@@ -188,7 +208,12 @@
 					"request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"dni\": \"12345678Z\",\n  \"nombreCompleto\": \"Laura Gomez\",\n  \"fechaContratacion\": \"2024-03-15\",\n  \"salario\": 1950.00,\n  \"turnoNoche\": false\n}" }, "url": "{{baseUrl}}/empleados/1" }
 				},
 				{
-					"name": "DELETE Eliminar Empleado (204)",
+					"name": "PATCH Modificar Parcialmente Empleado (200)",
+					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 200 OK', () => pm.response.to.have.status(200));"], "type": "text/javascript" } }],
+					"request": { "method": "PATCH", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"salario\": 2100.00\n}" }, "url": "{{baseUrl}}/empleados/1" }
+				},
+				{
+					"name": "DELETE Empleado (204)",
 					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 204 No Content', () => pm.response.to.have.status(204));"], "type": "text/javascript" } }],
 					"request": { "method": "DELETE", "url": "{{baseUrl}}/empleados/1" }
 				},
@@ -203,7 +228,7 @@
 					"request": { "method": "GET", "url": "{{baseUrl}}/empleados/999" }
 				},
 				{
-					"name": "GET Error Servidor Empleados (500)",
+					"name": "GET Simular Error Servidor Empleados (500)",
 					"event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 500 Internal Error', () => pm.response.to.have.status(500));"], "type": "text/javascript" } }],
 					"request": { "method": "GET", "url": "{{baseUrl}}/empleados/error-simulado" }
 				}
