@@ -16,6 +16,14 @@ API diseñada para la gestión integral de un almacén logístico. Este reposito
 4. **Pedidos a Proveedor** (`/api/v1/pedidos`): Registro de albaranes, fechas previstas de entrega, costes y estado de recepción.
 5. **Empleados** (`/api/v1/empleados`): Gestión del personal de almacén, DNI, salario y asignación de turno nocturno.
 
+## Operaciones Implementadas por Entidad
+* `GET` con hasta **3 parámetros de filtrado** opcionales por entidad (`200`, `400`, `500`).
+* `GET /{id}` para consulta individual (`200`, `404`, `500`).
+* `POST` para alta de registros (`201`, `400`, `500`).
+* `PUT /{id}` para actualización completa (`200`, `400`, `404`, `500`).
+* `PATCH /{id}` para **modificación parcial de cualquier atributo** de forma independiente (`200`, `400`, `404`, `500`).
+* `DELETE /{id}` para borrado de registros (`204`, `404`, `500`).
+
 ## Cómo levantar el entorno con WireMock
 
 1. Asegúrate de tener Java instalado y sitúate en la raíz del proyecto (`Almacen-backend-api`).
