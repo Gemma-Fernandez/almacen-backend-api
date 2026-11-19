@@ -9,7 +9,7 @@ servers:
 
 paths:
 
-  # =====================================
+  # ===========================================
   # 1. ENTIDAD: PRODUCTOS
 
   /productos:
@@ -69,6 +69,7 @@ paths:
           $ref: '#/components/responses/400BadRequest'
         '500':
           $ref: '#/components/responses/500InternalError'
+
   /productos/{id}:
     parameters:
       - name: id
@@ -112,6 +113,28 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '500':
           $ref: '#/components/responses/500InternalError'
+    patch:
+      summary: Modificar parcialmente cualquier atributo de un producto
+      operationId: patchProducto
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductoPatch'
+      responses:
+        '200':
+          description: Producto modificado parcialmente correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Producto'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '500':
+          $ref: '#/components/responses/500InternalError'
     delete:
       summary: Eliminar un producto
       operationId: deleteProducto
@@ -123,439 +146,541 @@ paths:
         '500':
           $ref: '#/components/responses/500InternalError'
 
-    # ===========================================
-    # 2. ENTIDAD: UBICACIONES
+  # ===========================================
+  # 2. ENTIDAD: UBICACIONES
 
-    /ubicaciones:
-      get:
-        summary: Listar ubicaciones con filtros
-        operationId: getUbicaciones
-        parameters:
-          - name: codigoUbicacion
-            in: query
-            required: false
-            schema:
-              type: string
-          - name: pasillo
-            in: query
-            required: false
-            schema:
-              type: integer
-          - name: ocupada
-            in: query
-            required: false
-            schema:
-              type: boolean
-        responses:
-          '200':
-            description: Lista de ubicaciones obtenida con éxito
-            content:
-              application/json:
-                schema:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/Ubicacion'
-          '400':
-            $ref: '#/components/responses/400BadRequest'
-          '500':
-            $ref: '#/components/responses/500InternalError'
-      post:
-        summary: Crear ubicación
-        operationId: createUbicacion
-        requestBody:
-          required: true
+  /ubicaciones:
+    get:
+      summary: Listar ubicaciones con filtros
+      operationId: getUbicaciones
+      parameters:
+        - name: codigoUbicacion
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: pasillo
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: ocupada
+          in: query
+          required: false
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Lista de ubicaciones obtenida con éxito
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UbicacionInput'
-        responses:
-          '201':
-            description: Ubicación creada
-            content:
-              application/json:
-                schema:
+                type: array
+                items:
                   $ref: '#/components/schemas/Ubicacion'
-          '400':
-            $ref: '#/components/responses/400BadRequest'
-          '500':
-            $ref: '#/components/responses/500InternalError'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '500':
+          $ref: '#/components/responses/500InternalError'
+    post:
+      summary: Crear ubicación
+      operationId: createUbicacion
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UbicacionInput'
+      responses:
+        '201':
+          description: Ubicación creada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ubicacion'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '500':
+          $ref: '#/components/responses/500InternalError'
 
-    /ubicaciones/{id}:
+  /ubicaciones/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+    get:
+      summary: Obtener ubicación por ID
+      operationId: getUbicacionById
+      responses:
+        '200':
+          description: Ubicación encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ubicacion'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '500':
+          $ref: '#/components/responses/500InternalError'
+    put:
+      summary: Actualizar ubicación
+      operationId: updateUbicacion
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UbicacionInput'
+      responses:
+        '200':
+          description: Ubicación actualizada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ubicacion'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '500':
+          $ref: '#/components/responses/500InternalError'
+    patch:
+      summary: Modificar parcialmente cualquier atributo de una ubicación
+      operationId: patchUbicacion
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UbicacionPatch'
+      responses:
+        '200':
+          description: Ubicación modificada parcialmente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ubicacion'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '500':
+          $ref: '#/components/responses/500InternalError'
+    delete:
+      summary: Eliminar ubicación
+      operationId: deleteUbicacion
+      responses:
+        '204':
+          description: Eliminada correctamente
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '500':
+          $ref: '#/components/responses/500InternalError'
+
+  # ================================================
+  # 3. ENTIDAD: PROVEEDORES
+
+  /proveedores:
+    get:
+      summary: Listar proveedores con filtros
+      operationId: getProveedores
       parameters:
-        - name: id
-          in: path
-          required: true
+        - name: cif
+          in: query
+          required: false
           schema:
-            type: integer
-      get:
-        summary: Obtener ubicación por ID
-        operationId: getUbicacionById
-        responses:
-          '200':
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Ubicacion'
-          '404':
-            $ref: '#/components/responses/404NotFound'
-          '500':
-            $ref: '#/components/responses/500InternalError'
-      put:
-        summary: Actualizar ubicación
-        operationId: updateUbicacion
-        requestBody:
-          required: true
+            type: string
+        - name: nombreEmpresa
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: activo
+          in: query
+          required: false
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Lista de proveedores obtenida con éxito
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UbicacionInput'
-        responses:
-          '200':
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Ubicacion'
-          '400':
-            $ref: '#/components/responses/400BadRequest'
-          '404':
-            $ref: '#/components/responses/404NotFound'
-          '500':
-            $ref: '#/components/responses/500InternalError'
-      delete:
-        summary: Eliminar ubicación
-        operationId: deleteUbicacion
-        responses:
-          '204':
-            description: Eliminada correctamente
-          '404':
-            $ref: '#/components/responses/404NotFound'
-          '500':
-            $ref: '#/components/responses/500InternalError'
-
-    # ==============================================
-    # 3. ENTIDAD: PROVEEDORES
-
-    /proveedores:
-      get:
-        summary: Listar proveedores con filtros
-        operationId: getProveedores
-        parameters:
-          - name: cif
-            in: query
-            required: false
-            schema:
-              type: string
-          - name: nombreEmpresa
-            in: query
-            required: false
-            schema:
-              type: string
-          - name: activo
-            in: query
-            required: false
-            schema:
-              type: boolean
-        responses:
-          '200':
-            content:
-              application/json:
-                schema:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/Proveedor'
-          '400':
-            $ref: '#/components/responses/400BadRequest'
-          '500':
-            $ref: '#/components/responses/500InternalError'
-      post:
-        summary: Crear proveedor
-        operationId: createProveedor
-        requestBody:
-          required: true
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProveedorInput'
-        responses:
-          '201':
-            content:
-              application/json:
-                schema:
+                type: array
+                items:
                   $ref: '#/components/schemas/Proveedor'
-          '400':
-            $ref: '#/components/responses/400BadRequest'
-          '500':
-            $ref: '#/components/responses/500InternalError'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '500':
+          $ref: '#/components/responses/500InternalError'
+    post:
+      summary: Crear proveedor
+      operationId: createProveedor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProveedorInput'
+      responses:
+        '201':
+          description: Proveedor creado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Proveedor'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '500':
+          $ref: '#/components/responses/500InternalError'
 
-    /proveedores/{id}:
+  /proveedores/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+    get:
+      summary: Obtener proveedor por ID
+      operationId: getProveedorById
+      responses:
+        '200':
+          description: Proveedor encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Proveedor'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '500':
+          $ref: '#/components/responses/500InternalError'
+    put:
+      summary: Actualizar proveedor
+      operationId: updateProveedor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProveedorInput'
+      responses:
+        '200':
+          description: Proveedor actualizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Proveedor'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '500':
+          $ref: '#/components/responses/500InternalError'
+    patch:
+      summary: Modificar parcialmente cualquier atributo de un proveedor
+      operationId: patchProveedor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProveedorPatch'
+      responses:
+        '200':
+          description: Proveedor modificado parcialmente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Proveedor'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '500':
+          $ref: '#/components/responses/500InternalError'
+    delete:
+      summary: Eliminar proveedor
+      operationId: deleteProveedor
+      responses:
+        '204':
+          description: Eliminado
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '500':
+          $ref: '#/components/responses/500InternalError'
+
+  # ===================================
+  # 4. ENTIDAD: PEDIDOS DE PROVEEDOR
+
+  /pedidos-proveedor:
+    get:
+      summary: Listar pedidos a proveedores con filtros
+      operationId: getPedidosProveedor
       parameters:
-        - name: id
-          in: path
-          required: true
+        - name: numeroAlbaran
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: recibido
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: proveedorId
+          in: query
+          required: false
           schema:
             type: integer
-      get:
-        summary: Obtener proveedor por ID
-        operationId: getProveedorById
-        responses:
-          '200':
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Proveedor'
-          '404':
-            $ref: '#/components/responses/404NotFound'
-          '500':
-            $ref: '#/components/responses/500InternalError'
-      put:
-        summary: Actualizar proveedor
-        operationId: updateProveedor
-        requestBody:
-          required: true
+      responses:
+        '200':
+          description: Lista de pedidos obtenida con éxito
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProveedorInput'
-        responses:
-          '200':
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Proveedor'
-          '400':
-            $ref: '#/components/responses/400BadRequest'
-          '404':
-            $ref: '#/components/responses/404NotFound'
-          '500':
-            $ref: '#/components/responses/500InternalError'
-      delete:
-        summary: Eliminar proveedor
-        operationId: deleteProveedor
-        responses:
-          '204':
-            description: Eliminado
-          '404':
-            $ref: '#/components/responses/404NotFound'
-          '500':
-            $ref: '#/components/responses/500InternalError'
-
-    # ===================================
-    # 4. ENTIDAD: PEDIDOS DE PROVEEDOR
-
-    /pedidos-proveedor:
-      get:
-        summary: Listar pedidos a proveedores con filtros
-        operationId: getPedidosProveedor
-        parameters:
-          - name: numeroAlbaran
-            in: query
-            required: false
-            schema:
-              type: string
-          - name: recibido
-            in: query
-            required: false
-            schema:
-              type: boolean
-          - name: proveedorId
-            in: query
-            required: false
-            schema:
-              type: integer
-        responses:
-          '200':
-            content:
-              application/json:
-                schema:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/PedidoProveedor'
-          '400':
-            $ref: '#/components/responses/400BadRequest'
-          '500':
-            $ref: '#/components/responses/500InternalError'
-      post:
-        summary: Crear nuevo pedido
-        operationId: createPedidoProveedor
-        requestBody:
-          required: true
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PedidoProveedorInput'
-        responses:
-          '201':
-            content:
-              application/json:
-                schema:
+                type: array
+                items:
                   $ref: '#/components/schemas/PedidoProveedor'
-          '400':
-            $ref: '#/components/responses/400BadRequest'
-          '500':
-            $ref: '#/components/responses/500InternalError'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '500':
+          $ref: '#/components/responses/500InternalError'
+    post:
+      summary: Crear nuevo pedido
+      operationId: createPedidoProveedor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PedidoProveedorInput'
+      responses:
+        '201':
+          description: Pedido creado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PedidoProveedor'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '500':
+          $ref: '#/components/responses/500InternalError'
 
-    /pedidos-proveedor/{id}:
+  /pedidos-proveedor/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+    get:
+      summary: Obtener pedido por ID
+      operationId: getPedidoProveedorById
+      responses:
+        '200':
+          description: Pedido encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PedidoProveedor'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '500':
+          $ref: '#/components/responses/500InternalError'
+    put:
+      summary: Actualizar pedido
+      operationId: updatePedidoProveedor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PedidoProveedorInput'
+      responses:
+        '200':
+          description: Pedido actualizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PedidoProveedor'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '500':
+          $ref: '#/components/responses/500InternalError'
+    patch:
+      summary: Modificar parcialmente cualquier atributo de un pedido
+      operationId: patchPedidoProveedor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PedidoProveedorPatch'
+      responses:
+        '200':
+          description: Pedido modificado parcialmente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PedidoProveedor'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '500':
+          $ref: '#/components/responses/500InternalError'
+    delete:
+      summary: Eliminar pedido
+      operationId: deletePedidoProveedor
+      responses:
+        '204':
+          description: Eliminado
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '500':
+          $ref: '#/components/responses/500InternalError'
+
+  # ============================================
+  # 5. ENTIDAD: EMPLEADOS
+
+  /empleados:
+    get:
+      summary: Listar empleados con filtros
+      operationId: getEmpleados
       parameters:
-        - name: id
-          in: path
-          required: true
+        - name: dni
+          in: query
+          required: false
           schema:
-            type: integer
-      get:
-        summary: Obtener pedido por ID
-        operationId: getPedidoProveedorById
-        responses:
-          '200':
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/PedidoProveedor'
-          '404':
-            $ref: '#/components/responses/404NotFound'
-          '500':
-            $ref: '#/components/responses/500InternalError'
-      put:
-        summary: Actualizar pedido
-        operationId: updatePedidoProveedor
-        requestBody:
-          required: true
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PedidoProveedorInput'
-        responses:
-          '200':
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/PedidoProveedor'
-          '400':
-            $ref: '#/components/responses/400BadRequest'
-          '404':
-            $ref: '#/components/responses/404NotFound'
-          '500':
-            $ref: '#/components/responses/500InternalError'
-      delete:
-        summary: Eliminar pedido
-        operationId: deletePedidoProveedor
-        responses:
-          '204':
-            description: Eliminado
-          '404':
-            $ref: '#/components/responses/404NotFound'
-          '500':
-            $ref: '#/components/responses/500InternalError'
-
-    # =====================================
-    # 5. ENTIDAD: EMPLEADOS
-
-    /empleados:
-      get:
-        summary: Listar empleados con filtros
-        operationId: getEmpleados
-        parameters:
-          - name: dni
-            in: query
-            required: false
-            schema:
-              type: string
-          - name: turnoNoche
-            in: query
-            required: false
-            schema:
-              type: boolean
-          - name: salarioMin
-            in: query
-            required: false
-            schema:
-              type: number
-              format: float
-        responses:
-          '200':
-            content:
-              application/json:
-                schema:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/Empleado'
-          '400':
-            $ref: '#/components/responses/400BadRequest'
-          '500':
-            $ref: '#/components/responses/500InternalError'
-      post:
-        summary: Crear empleado
-        operationId: createEmpleado
-        requestBody:
-          required: true
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EmpleadoInput'
-        responses:
-          '201':
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Empleado'
-          '400':
-            $ref: '#/components/responses/400BadRequest'
-          '500':
-            $ref: '#/components/responses/500InternalError'
-
-    /empleados/{id}:
-      parameters:
-        - name: id
-          in: path
-          required: true
+            type: string
+        - name: turnoNoche
+          in: query
+          required: false
           schema:
-            type: integer
-      get:
-        summary: Obtener empleado por ID
-        operationId: getEmpleadoById
-        responses:
-          '200':
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Empleado'
-          '404':
-            $ref: '#/components/responses/404NotFound'
-          '500':
-            $ref: '#/components/responses/500InternalError'
-      put:
-        summary: Actualizar empleado
-        operationId: updateEmpleado
-        requestBody:
-          required: true
+            type: boolean
+        - name: salarioMin
+          in: query
+          required: false
+          schema:
+            type: number
+            format: float
+      responses:
+        '200':
+          description: Lista de empleados obtenida con éxito
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EmpleadoInput'
-        responses:
-          '200':
-            content:
-              application/json:
-                schema:
+                type: array
+                items:
                   $ref: '#/components/schemas/Empleado'
-          '400':
-            $ref: '#/components/responses/400BadRequest'
-          '404':
-            $ref: '#/components/responses/404NotFound'
-          '500':
-            $ref: '#/components/responses/500InternalError'
-      delete:
-        summary: Eliminar empleado
-        operationId: deleteEmpleado
-        responses:
-          '204':
-            description: Eliminado
-          '404':
-            $ref: '#/components/responses/404NotFound'
-          '500':
-            $ref: '#/components/responses/500InternalError'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '500':
+          $ref: '#/components/responses/500InternalError'
+    post:
+      summary: Crear empleado
+      operationId: createEmpleado
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmpleadoInput'
+      responses:
+        '201':
+          description: Empleado creado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empleado'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '500':
+          $ref: '#/components/responses/500InternalError'
 
-  # ==========================================
-  # COMPONENTES Y ESQUEMAS (MODELOS DE DATOS)
+  /empleados/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+    get:
+      summary: Obtener empleado por ID
+      operationId: getEmpleadoById
+      responses:
+        '200':
+          description: Empleado encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empleado'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '500':
+          $ref: '#/components/responses/500InternalError'
+    put:
+      summary: Actualizar empleado
+      operationId: updateEmpleado
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmpleadoInput'
+      responses:
+        '200':
+          description: Empleado actualizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empleado'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '500':
+          $ref: '#/components/responses/500InternalError'
+    patch:
+      summary: Modificar parcialmente cualquier atributo de un empleado
+      operationId: patchEmpleado
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmpleadoPatch'
+      responses:
+        '200':
+          description: Empleado modificado parcialmente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empleado'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '500':
+          $ref: '#/components/responses/500InternalError'
+    delete:
+      summary: Eliminar empleado
+      operationId: deleteEmpleado
+      responses:
+        '204':
+          description: Eliminado
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '500':
+          $ref: '#/components/responses/500InternalError'
+
+# ======================================
+# COMPONENTES Y ESQUEMAS (MODELOS DE DATOS)
 
 components:
   schemas:
@@ -582,6 +707,37 @@ components:
           type: integer
           minimum: 0
           example: 150
+        fechaAlta:
+          type: string
+          format: date
+          example: "2026-11-11"
+        ubicacionId:
+          type: integer
+          example: 1
+        proveedorId:
+          type: integer
+          example: 2
+
+    ProductoPatch:
+      type: object
+      description: Permite modificar parcialmente cualquier atributo del producto
+      properties:
+        codigoSKU:
+          type: string
+          pattern: '^PROD-[0-9]{5}$'
+          example: "PROD-12345"
+        nombre:
+          type: string
+          example: "Zapatillas Running Trail"
+        precio:
+          type: number
+          format: float
+          minimum: 0.01
+          example: 79.99
+        stock:
+          type: integer
+          minimum: 0
+          example: 140
         fechaAlta:
           type: string
           format: date
@@ -631,6 +787,31 @@ components:
           format: date
           example: "2026-11-01"
 
+    UbicacionPatch:
+      type: object
+      description: Permite modificar parcialmente cualquier atributo de la ubicación
+      properties:
+        codigoUbicacion:
+          type: string
+          pattern: '^PAS-[0-9]{2}-[A-Z]$'
+          example: "PAS-04-B"
+        pasillo:
+          type: integer
+          minimum: 1
+          maximum: 50
+          example: 4
+        altura:
+          type: number
+          format: float
+          example: 2.50
+        ocupada:
+          type: boolean
+          example: false
+        fechaUltimaRevision:
+          type: string
+          format: date
+          example: "2026-11-19"
+
     Ubicacion:
       allOf:
         - type: object
@@ -667,6 +848,30 @@ components:
         activo:
           type: boolean
           example: true
+
+    ProveedorPatch:
+      type: object
+      description: Permite modificar parcialmente cualquier atributo del proveedor
+      properties:
+        cif:
+          type: string
+          pattern: '^[A-Z][0-9]{8}$'
+          example: "B12345678"
+        nombreEmpresa:
+          type: string
+          example: "Logística Global S.L."
+        telefono:
+          type: integer
+          example: 912345678
+        evaluacionCalidad:
+          type: number
+          format: float
+          minimum: 0.0
+          maximum: 5.0
+          example: 4.9
+        activo:
+          type: boolean
+          example: false
 
     Proveedor:
       allOf:
@@ -712,6 +917,36 @@ components:
           type: integer
           example: 5
 
+    PedidoProveedorPatch:
+      type: object
+      description: Permite modificar parcialmente cualquier atributo del pedido a proveedor
+      properties:
+        numeroAlbaran:
+          type: string
+          pattern: '^ALB-[0-9]{4}-[0-9]{3}$'
+          example: "ALB-2026-001"
+        cantidadUnidades:
+          type: integer
+          minimum: 1
+          example: 500
+        costeTotal:
+          type: number
+          format: float
+          example: 12500.50
+        recibido:
+          type: boolean
+          example: true
+        fechaEntregaPrevista:
+          type: string
+          format: date
+          example: "2026-11-20"
+        proveedorId:
+          type: integer
+          example: 2
+        empleadoId:
+          type: integer
+          example: 5
+
     PedidoProveedor:
       allOf:
         - type: object
@@ -744,6 +979,30 @@ components:
           format: float
           minimum: 1080.00
           example: 1450.00
+        fechaContratacion:
+          type: string
+          format: date
+          example: "2024-03-15"
+
+    EmpleadoPatch:
+      type: object
+      description: Permite modificar parcialmente cualquier atributo del empleado
+      properties:
+        dni:
+          type: string
+          pattern: '^[0-9]{8}[A-Z]$'
+          example: "12345678Z"
+        nombreCompleto:
+          type: string
+          example: "Carlos Gómez Pérez"
+        turnoNoche:
+          type: boolean
+          example: true
+        salarioBase:
+          type: number
+          format: float
+          minimum: 1080.00
+          example: 1600.00
         fechaContratacion:
           type: string
           format: date
