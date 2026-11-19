@@ -1,0 +1,17 @@
+{
+  "request":
+  { "method": "PATCH",
+    "url": "/api/v1/empleados/1" },
+  "response":
+  { "status": 200,
+    "headers":
+    { "Content-Type": "application/json" },
+    "jsonBody":
+    { "id": 1,
+      "dni": "12345678Z",
+      "nombreCompleto": "Laura Gomez",
+      "fechaContratacion": "2024-03-15",
+      "salario": 2100.00,
+      "turnoNoche": true
+    } }
+}
